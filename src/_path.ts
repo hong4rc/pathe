@@ -281,9 +281,13 @@ export const basename: typeof path.basename = function (p, extension) {
     }
   }
 
-  return extension && lastSegment.endsWith(extension)
-    ? lastSegment.slice(0, -extension.length)
-    : lastSegment;
+  if (extension && lastSegment.endsWith(extension)) {
+    if (lastSegment === extension && normalizeWindowsPath(p) !== extension) {
+      return lastSegment;
+    }
+    return lastSegment.slice(0, -extension.length);
+  }
+  return lastSegment;
 };
 
 export const parse: typeof path.parse = function (p) {

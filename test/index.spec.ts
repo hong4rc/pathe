@@ -105,6 +105,15 @@ runTest("basename", basename, [
   [String.raw`.\myfile.html`, "myfile.html"],
   [String.raw`.\myfile.html`, ".html", "myfile"],
   [String.raw`.\undefined`, undefined, "undefined"],
+
+  // node parity: suffix equals full last segment but path has a directory component
+  ["/dist/index.js", "index.js", "index.js"],
+  ["/project/.eslintrc", ".eslintrc", ".eslintrc"],
+  ["/a/README", "README", "README"],
+  // bare path (whole path === suffix) still returns ""
+  ["index.js", "index.js", ""],
+  // normal extension stripping still works
+  ["/x/foo.tsx", ".tsx", "foo"],
 ]);
 
 runTest("dirname", dirname, {
